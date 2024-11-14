@@ -22,7 +22,7 @@
 // #define WOLFSSL_TLS13
 #define HAVE_TLS_EXTENSIONS
 #define WC_RSA_PSS
-#define HAVE_HKDF
+//#define HAVE_HKDF
 #define HAVE_AEAD
 #define HAVE_SUPPORTED_CURVES
 
@@ -33,11 +33,11 @@
 #define HAVE_AESGCM
 /* when you want to use SHA384 */
 #define WOLFSSL_SHA384
-#define WOLFSSL_SHA512
+//#define WOLFSSL_SHA512
 #define HAVE_ECC
-#define HAVE_CURVE25519
+//#define HAVE_CURVE25519
 #define CURVE25519_SMALL
-#define HAVE_ED25519
+//#define HAVE_ED25519
 
 /* ALPN in wolfSSL is enabled by default, can be disabled with menuconfig */
 #define HAVE_ALPN
@@ -71,7 +71,7 @@
  * but not trusted */
 #define WOLFSSL_ALT_CERT_CHAINS
 
-#define WOLFSSL_BASE64_ENCODE
+//#define WOLFSSL_BASE64_ENCODE
 
 /* Static ciphers are highly discouraged */
 // #define WOLFSSL_STATIC_RSA
@@ -79,7 +79,7 @@
 // #define WOLFSSL_STATIC_DH
 
 /* This enables the most common openssl compatibility layer API's */
-#define OPENSSL_EXTRA
+//#define OPENSSL_EXTRA
 
 /* This enables all Openssl compatibility layer functions
  * Note: this is large and cannot be used with NO_ASN_TIME */
