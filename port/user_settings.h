@@ -22,7 +22,9 @@
 // #define WOLFSSL_TLS13
 #define HAVE_TLS_EXTENSIONS
 #define WC_RSA_PSS
-//#define HAVE_HKDF
+#ifndef HAVE_HKDF               // defined in homekit CMakeLists.txt
+#define HAVE_HKDF
+#endif
 #define HAVE_AEAD
 #define HAVE_SUPPORTED_CURVES
 
@@ -33,12 +35,18 @@
 #define HAVE_AESGCM
 /* when you want to use SHA384 */
 #define WOLFSSL_SHA384
-//#define WOLFSSL_SHA512
+#ifndef WOLFSSL_SHA512          // defined in homekit CMakeLists.txt
+#define WOLFSSL_SHA512
+#endif
 #define HAVE_ECC
-//#define HAVE_CURVE25519
-#define CURVE25519_SMALL
-//#define HAVE_ED25519
 
+#ifndef HAVE_CURVE25519         // defined in homekit CMakeLists.txt
+#define HAVE_CURVE25519
+#endif
+#define CURVE25519_SMALL
+#ifndef HAVE_ED25519            // defined in homekit CMakeLists.txt
+#define HAVE_ED25519
+#endif
 /* ALPN in wolfSSL is enabled by default, can be disabled with menuconfig */
 #define HAVE_ALPN
 
@@ -53,7 +61,9 @@
 #define NO_MAIN_DRIVER
 
 /* you can disable folowing cipher suites by uncommenting following lines */
-// #define NO_DSA
+#ifndef NO_DSA                  // defined in homekit CMakeLists.txt
+#define NO_DSA
+#endif
 // #define NO_DH
 
 /* These Flags are defined to make wolfssl not use some insecure cipher suites */
@@ -71,7 +81,10 @@
  * but not trusted */
 #define WOLFSSL_ALT_CERT_CHAINS
 
-//#define WOLFSSL_BASE64_ENCODE
+
+#ifndef WOLFSSL_BASE64_ENCODE   // defined in homekit CMakeLists.txt
+#define WOLFSSL_BASE64_ENCODE
+#endif
 
 /* Static ciphers are highly discouraged */
 // #define WOLFSSL_STATIC_RSA
@@ -79,7 +92,8 @@
 // #define WOLFSSL_STATIC_DH
 
 /* This enables the most common openssl compatibility layer API's */
-//#define OPENSSL_EXTRA
+// causes macro SHA512 to fail in homekit crypto.c (needs to be changed to WC_SHA512)
+// #define OPENSSL_EXTRA
 
 /* This enables all Openssl compatibility layer functions
  * Note: this is large and cannot be used with NO_ASN_TIME */
@@ -119,6 +133,10 @@
 #if defined(WOLFSSL_ESPWROOM32) || defined(WOLFSSL_ESPWROOM32SE)
     /* Define USE_FAST_MATH and SMALL_STACK                        */
     #define ESP32_USE_RSA_PRIMITIVE
+    /* Fixes the error on esp32 (didn't appear on esp32-c3)
+        >>> crypto_srp_init: Failed to get SRP verifier (code -1)
+        !!! HomeKit: [Client 1] Failed to initialize SRP           */
+    #define FP_MAX_BITS (8192 * 2) 
     /* threshold for performance adjustment for hw primitive use   */
     /* X bits of G^X mod P greater than                            */
     #define EPS_RSA_EXPT_XBTIS           36
